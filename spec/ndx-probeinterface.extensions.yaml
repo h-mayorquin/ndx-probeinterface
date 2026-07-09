@@ -1,29 +1,18 @@
 groups:
-- neurodata_type_def: Probe
-  neurodata_type_inc: Device
-  doc: Neural probe object according to probeinterface specification
+- neurodata_type_def: ProbeModel
+  neurodata_type_inc: DeviceModel
+  doc: Neural probe model (catalogue geometry + identity), extends core 
+    DeviceModel
   attributes:
   - name: ndim
     dtype: int
     default_value: 2
-    doc: dimension of the probe
-    required: false
-  - name: model_name
-    dtype: text
-    doc: model of the probe; e.g. 'Neuropixels 1.0'
-    required: false
-  - name: serial_number
-    dtype: text
-    doc: serial number of the probe
+    doc: dimension of the probe (2 or 3)
     required: false
   - name: unit
     dtype: text
     default_value: micrometer
-    doc: SI unit used to define the probe; e.g. 'meter'.
-    required: false
-  - name: annotations
-    dtype: text
-    doc: annotations attached to the probe
+    doc: SI unit used to define the probe geometry; e.g. 'micrometer'.
     required: false
   datasets:
   - name: planar_contour
@@ -43,10 +32,20 @@ groups:
     - - null
       - 3
     doc: The planar polygon that outlines the probe contour.
+    quantity: '?'
   groups:
-  - neurodata_type_inc: ContactTable
-    doc: Neural probe contacts according to probeinterface specification
-- neurodata_type_def: ContactTable
+  - neurodata_type_inc: ContactsTable
+    doc: Per-contact geometry for this probe model
+- neurodata_type_def: Probe
+  neurodata_type_inc: Device
+  doc: Physical neural probe instance, extends core Device with a link to a 
+    ProbeModel
+  attributes:
+  - name: annotations
+    dtype: text
+    doc: instance-level probeinterface annotations, JSON-encoded
+    required: false
+- neurodata_type_def: ContactsTable
   neurodata_type_inc: DynamicTable
   doc: Neural probe contacts according to probeinterface specification
   datasets:
@@ -71,8 +70,7 @@ groups:
   - name: contact_id
     neurodata_type_inc: VectorData
     dtype: text
-    doc: unique ID of the contact
-    quantity: '?'
+    doc: unique ID of the contact; the stable link key
   - name: shank_id
     neurodata_type_inc: VectorData
     dtype: text
@@ -111,9 +109,4 @@ groups:
     neurodata_type_inc: VectorData
     dtype: float
     doc: height of a rectangular contact
-    quantity: '?'
-  - name: device_channel_index_pi
-    neurodata_type_inc: VectorData
-    dtype: int
-    doc: index of the channel connected to the contact
     quantity: '?'

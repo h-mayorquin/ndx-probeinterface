@@ -3,16 +3,19 @@ namespaces:
   - Alessio Buccino
   - Kyu Hyun Lee
   - Geeling Chau
+  - Heberto Mayorquin
   contact:
   - alessiop.buccino@gmail.com
   - kyuhyun9056@gmail.com
   - gchau@caltech.edu
+  - h.mayorquin@gmail.com
   doc: Extension for defining neural probes in the probeinterface format
   name: ndx-probeinterface
   schema:
   - namespace: core
     neurodata_types:
+    - DeviceModel
     - Device
   - namespace: hdmf-common
   - source: ndx-probeinterface.extensions.yaml
-  version: 0.1.0
+  version: 0.3.0

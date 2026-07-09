@@ -16,14 +16,16 @@ if not os.path.exists(ndx_probeinterface_specpath):
 # Load the namespace
 load_namespaces(ndx_probeinterface_specpath)
 
-# TODO: import your classes here or define your class using get_class to make
-# them accessible at the package level
+# ProbeModel extends core DeviceModel (catalogue geometry + identity), Probe
+# extends core Device (physical instance linking to a ProbeModel), ContactsTable
+# holds the per-contact geometry owned by the ProbeModel.
+ProbeModel = get_class("ProbeModel", "ndx-probeinterface")
 Probe = get_class("Probe", "ndx-probeinterface")
-ContactTable = get_class("ContactTable", "ndx-probeinterface")
+ContactsTable = get_class("ContactsTable", "ndx-probeinterface")
 
 
 # Add custom constructors
 from .io import from_probeinterface, to_probeinterface
 
-Probe.from_probeinterface = from_probeinterface
+Probe.from_probeinterface = staticmethod(from_probeinterface)
 Probe.to_probeinterface = to_probeinterface
